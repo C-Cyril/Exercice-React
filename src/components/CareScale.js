@@ -18,4 +18,9 @@ function CareScale({scaleValue, careType}) {
         </div>
     )
 }
+
+function handleClick (pPlantName) {
+    alert(`Vous voulez acheter 1 ${pPlantName} ? Très bon choix`)
+}
+
 export default CareScale
