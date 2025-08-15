@@ -10,7 +10,7 @@ function CareScale({scaleValue, careType}) {
 
     //retourne autant de ☀️ ou 💧 que la valeure de scaleValue
     return (
-        <div>
+        <div onClick={() => handleClickCareScale(scaleValue, careType)}>
             {range.map((rangeElem) =>
                 scaleValue >= rangeElem ? 
                     <span key={rangeElem.toString()}>{scaleType}</span> : null
@@ -19,8 +19,13 @@ function CareScale({scaleValue, careType}) {
     )
 }
 
-function handleClick (pPlantName) {
-    alert(`Vous voulez acheter 1 ${pPlantName} ? Très bon choix`)
+// affiche une alert qui indique le besoin en eau/lumière de la plante
+function handleClickCareScale (scaleValue, pCareType) {
+    const rangeString = ["peu", "modérement", "beaucoup"]
+    const careType = pCareType === "light" ?
+        "de lumière" : "d'arrosage"
+    
+    alert(`Cette plante requiert ${rangeString[scaleValue -1]} ${careType} .`)
 }
 
 export default CareScale
