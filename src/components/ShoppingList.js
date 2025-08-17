@@ -12,7 +12,7 @@ function ShoppingList() {
     
     //pour chaque entrée de listePlantes ont retourne un <li>
     return (
-        <div>
+        <div className='lmj-shopping-list'>
             <ul>
                 {listeCategories.map((categorie) => (
                     <li key={`${categorie}`} >{categorie}</li>
