@@ -1,8 +1,11 @@
 import "../style/Cart.css"
 import { useState } from "react"
 
-function Cart() {
-  const monsteraPrice = 8
+//je récupère en prop le state depuis App.js
+function Cart({cart, updateCart}) {
+  const total = cart.reduce(
+    (acc, plantType) => acc + plantType.amount * plantType.price, 0
+  )
   /*
   useState renvoie une paire de valeur dans un tableau :
     - la valeur actuelle (que je nomme cart)
@@ -13,7 +16,6 @@ function Cart() {
     const cart = cartState[0]
     const updateCart = cartState[1]
   */
-  const [cart, updateCart] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
 
   /*
@@ -29,15 +31,22 @@ function Cart() {
         >
           Fermer
         </button>
-        <h2>Panier</h2>
-        <button onClick={() => updateCart(0)}>Vider le Panier</button>
-        <div>
-            Monstera : {monsteraPrice}€
-            <button onClick={() => updateCart(cart + 1)}>
-                Ajouter
-            </button>
-        </div>
-        <h3>Total : {monsteraPrice * cart}€</h3>
+        {cart.length > 0 ? (
+          <div>
+            <h2>Panier</h2>
+            <ul>
+              {cart.map(({name, price, amount}, index) => (
+                <div key={`${name}-${index}`}>
+                  {name} {price}€ x {amount}
+                </div>
+              ))}
+            </ul>
+            <h3>Total : {total}€</h3>
+            <button onClick={() => updateCart([])}>Vider le Panier</button>
+          </div>
+        ) : (
+        <div>Votre panier est vide</div>
+        )}
       </div>
   )
   : 
@@ -52,5 +61,16 @@ function Cart() {
     </div>
   )
 }
+
+/*
+        <button onClick={() => updateCart(0)}>Vider le Panier</button>
+        <div>
+            Monstera : {monsteraPrice}€
+            <button onClick={() => updateCart(cart + 1)}>
+                Ajouter
+            </button>
+        </div>
+*/
+
 
 export default Cart
