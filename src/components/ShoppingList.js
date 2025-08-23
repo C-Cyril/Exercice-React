@@ -6,7 +6,7 @@ import { useState } from "react";
 
 function ShoppingList({cart, updateCart}) {
     const [categorieChoisie, setCategorieChoisie] = useState('')
-    
+
     //ajoute chaque catégorie différente de listePlantes dans listeCategories
     let listeCategories = []
     plantList.forEach((plant) => {if(listeCategories.includes(plant.category) === false) {

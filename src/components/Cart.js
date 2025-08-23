@@ -1,8 +1,8 @@
 import "../style/Cart.css"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 //je récupère en prop le state depuis App.js
-function Cart({cart, updateCart}) {
+function Cart({cart, updateCart, categorieChoisie}) {
   const total = cart.reduce(
     (acc, plantType) => acc + plantType.amount * plantType.price, 0
   )
@@ -16,13 +16,24 @@ function Cart({cart, updateCart}) {
     const cart = cartState[0]
     const updateCart = cartState[1]
   */
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   /*
   Lorsqu'un state est modifié, alors l'affichage du composant est rafraichit et la valeur 
   affichée est actualisée, on dit que le composant est re-render.
   */
 
+  /*
+  useEffect(fonctionAExecuter, [tableauDeDependances])
+  "useEffect" déclanche la fonction passée en paramètre à chaque rendu (par défaut)
+  OU à chaque fois que l'un des paramètre passé dans le tableau de dépendances change
+  */
+  //affiche le montaant du panier dans le titre de l'onglets
+  useEffect(() => {
+    //alert(`J'aurais ${total}€ à payer`)
+    document.title = `LMJ : ${total}€ d'achats`
+  }, [total])
+  
   return isOpen ? (
       <div className='lmj-cart'>
         <button

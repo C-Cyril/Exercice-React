@@ -4,7 +4,7 @@ import ShoppingList from './ShoppingList'
 import Footer from './Footer'
 import '../style/Layout.css'
 import logo from '../assets/logoLeaf.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 /*
 faire remonter le state cart : 
@@ -14,8 +14,14 @@ faire remonter le state cart :
         "j'envoie" le state au composant Cart enfant
 */
 function App() {
-    const [cart, updateCart] = useState([])
-    const [listeDesCategories, setCategorie] = useState([])
+    const cartLocal = localStorage.getItem("panierLocal")
+    //SI cartLocal n'est pas null on le récupère dans cart, SINON cart est initialisé à []
+    const [cart, updateCart] = useState(cartLocal ? JSON.parse(cartLocal) : [])
+
+    useEffect(() => {
+        localStorage.setItem("panierLocal", JSON.stringify(cart))
+        console.log(JSON.stringify(cart))
+    }, [cart])
 
     return (
         <div>
@@ -24,7 +30,10 @@ function App() {
             </Banner>
             <div className='lmj-layout-inner'>
                 <Cart cart={cart} updateCart={updateCart} />
-                <ShoppingList cart={cart} updateCart={updateCart} />
+                <ShoppingList 
+                    cart={cart} 
+                    updateCart={updateCart} 
+                />
             </div>
             <Footer />
         </div>

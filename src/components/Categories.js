@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { plantList } from "../datas/plantList";
 import "../style/Categories.css"
 
 function Categories ({pListeDesCategories, setCategorieChoisie, CategorieChoisie}) {
