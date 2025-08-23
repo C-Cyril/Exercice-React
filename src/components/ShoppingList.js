@@ -1,17 +1,21 @@
 import { plantList } from "../datas/plantList";
 import PlantItem from "./PlantItem";
+import Categories from "./Categories";
 import "../style/ShoppingList.css"
+import { useState } from "react";
 
 function ShoppingList({cart, updateCart}) {
-    let listeCategories = [];
+    const [categorieChoisie, setCategorieChoisie] = useState('')
     
     //ajoute chaque catégorie différente de listePlantes dans listeCategories
+    let listeCategories = []
     plantList.forEach((plant) => {if(listeCategories.includes(plant.category) === false) {
         listeCategories.push(plant.category);
     }})
     
     function addToCart(name, price) {
         const currentPlantAdded = cart.find((plant) => plant.name === name)
+        //si la plante est déjà dans le panier
         if (currentPlantAdded) {
             const cartFilteredCurrentPlant = cart.filter(
                 (plant) => plant.name !== name
@@ -30,27 +34,31 @@ function ShoppingList({cart, updateCart}) {
     }
 
     //pour chaque entrée de listePlantes ont retourne un <li>
+    // affiche seulement les plantes qui correspondent à la catégorie choisie dans la liste Categories
     return (
         <div className='lmj-shopping-list'>
-            <ul>
-                {listeCategories.map((categorie) => (
-                    <li key={`${categorie}`} >{categorie}</li>
-                ))}
-            </ul>
+            <Categories 
+                pListeDesCategories={listeCategories}
+                setCategorieChoisie={setCategorieChoisie}
+                categorieChoisie={categorieChoisie}
+            />
+            
             <ul className="lmj-plant-list">
-                {plantList.map(({name, cover, id, light, water, price}) => (
-                    <div key={id}>
-                        <PlantItem
-                            name={name}
-                            cover={cover}
-                            id={id}
-                            light={light}
-                            water={water}
-                        />
-                        <button onClick={() => addToCart(name, price)}>Ajouter</button>
-                    </div>
+                {plantList.map(({name, cover, id, light, water, price, category}) =>
+                    !categorieChoisie || categorieChoisie === category ? (
+                        <div key={id}>
+                            <PlantItem
+                                name={name}
+                                cover={cover}
+                                id={id}
+                                light={light}
+                                water={water}
+                            />
+                            <button onClick={() => addToCart(name, price)}>Ajouter</button>
+                        </div>
 
-                ))}
+                ) : null
+            )}
             </ul>
         </div>
     )

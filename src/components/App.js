@@ -8,13 +8,14 @@ import { useState } from 'react'
 
 /*
 faire remonter le state cart : 
-    const [cart, updateCart] = useState(0)
+    const [cart, updateCart] = useState([])
         je déclare le state dans le fichier parent
     <Cart cart={cart} updateCart={updateCart} />
         "j'envoie" le state au composant Cart enfant
 */
 function App() {
     const [cart, updateCart] = useState([])
+    const [listeDesCategories, setCategorie] = useState([])
 
     return (
         <div>
